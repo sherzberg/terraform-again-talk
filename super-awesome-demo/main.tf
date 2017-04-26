@@ -1,4 +1,4 @@
-variable "domain" {}
+variable "dns_zone" {}
 
 resource "digitalocean_ssh_key" "default" {
   name       = "Terraform Example"
@@ -10,6 +10,7 @@ module "apache" {
 
   package             = "apache2"
   ssh_key_fingerprint = "${digitalocean_ssh_key.default.fingerprint}"
+  dns_zone            = "${var.dns_zone}"
 }
 
 module "nginx" {
@@ -17,27 +18,5 @@ module "nginx" {
 
   package             = "nginx"
   ssh_key_fingerprint = "${digitalocean_ssh_key.default.fingerprint}"
-}
-
-provider "godaddy" {}
-
-resource "godaddy_domain_record" "domains" {
-  domain = "${var.domain}"
-
-  record {
-    name = "nginx"
-    type = "A"
-    data = "${module.nginx.lb_ip}"
-    ttl  = 600
-  }
-
-  record {
-    name = "apache"
-    type = "A"
-    data = "${module.apache.lb_ip}"
-    ttl  = 600
-  }
-
-  addresses   = ["192.168.0.1"]
-  nameservers = ["ns63.domaincontrol.com", "ns64.domaincontrol.com"]
+  dns_zone            = "${var.dns_zone}"
 }

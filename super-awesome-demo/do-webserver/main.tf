@@ -6,6 +6,8 @@ variable "count" {
 
 variable "ssh_key_fingerprint" {}
 
+variable "dns_zone" {}
+
 resource "digitalocean_droplet" "webserver" {
   image    = "ubuntu-14-04-x64"
   count    = "${var.count}"
@@ -54,4 +56,16 @@ resource "digitalocean_loadbalancer" "public" {
 
 output "lb_ip" {
   value = "${digitalocean_loadbalancer.public.ip}"
+}
+
+resource "dnsimple_record" "public_record" {
+  domain = "${var.dns_zone}"
+  name   = "${var.package}"
+  value  = "${digitalocean_loadbalancer.public.ip}"
+  type   = "A"
+  ttl    = 600
+}
+
+output "dns" {
+  value = "${dnsimple_record.public_record.hostname}"
 }
