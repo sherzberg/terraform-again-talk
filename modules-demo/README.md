@@ -24,7 +24,7 @@ Outputs:
 
 fileoutput = /tmp/fileoutputer.txt
 
-``` bash
+```bash
 $ cat /tmp/fileoutputer.txt
 12
 ```

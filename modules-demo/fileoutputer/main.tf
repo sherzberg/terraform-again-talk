@@ -5,15 +5,13 @@ variable "filepath" {
 }
 
 resource "null_resource" "current_date" {
+  provisioner "local-exec" {
+    command = "echo ${var.input} > ${var.filepath}"
+  }
 
-    provisioner "local-exec" {
-        command = "echo ${var.input} > ${var.filepath}"
-    }
-
-    triggers {
-        VERSION = "${var.input}"
-    }
-
+  triggers {
+    VERSION = "${var.input}"
+  }
 }
 
 output "filepath" {
