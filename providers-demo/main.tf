@@ -1,5 +1,4 @@
-provider "docker" {
-}
+provider "docker" {}
 
 resource "docker_image" "alpine-three-five" {
   name = "alpine:3.5"
