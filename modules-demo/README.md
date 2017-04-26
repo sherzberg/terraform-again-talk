@@ -23,6 +23,9 @@ Apply complete! Resources: 1 added, 0 changed, 0 destroyed.
 Outputs:
 
 fileoutput = /tmp/fileoutputer.txt
+```
+
+Let's look at the file:
 
 ```bash
 $ cat /tmp/fileoutputer.txt
